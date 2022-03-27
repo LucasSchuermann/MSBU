@@ -49,5 +49,17 @@ public class SteuerungTyp : MonoBehaviour
        
     }
 
-   
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log(collision.gameObject.name);
+        if(collision.gameObject.name == "Tor")
+            collision.gameObject.GetComponent<Renderer>().material.color = new Color(100, 0, 0);
+        
+    }
+
+    private void OnCollisionExit(Collision other)
+    {
+        if(other.gameObject.name == "Tor")
+            other.gameObject.GetComponent<Renderer>().material.color = new Color(255, 255, 255);
+    }
 }
