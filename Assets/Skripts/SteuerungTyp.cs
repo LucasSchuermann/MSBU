@@ -8,6 +8,7 @@ public class SteuerungTyp : MonoBehaviour
    
     [SerializeField] private Transform groundCheckTransform = null;
     [SerializeField] private LayerMask playerMask;
+    [SerializeField] private GameObject torPrefab;
     
     private bool jumpKeyPressed;
     private float horizontalInput;
@@ -49,17 +50,22 @@ public class SteuerungTyp : MonoBehaviour
        
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(collision.gameObject.name);
-        if(collision.gameObject.name == "Tor")
-            collision.gameObject.GetComponent<Renderer>().material.color = new Color(100, 0, 0);
+        foreach (GameObject go in GameObject.FindGameObjectsWithTag("TorCollider"))
+            {
+                go.GetComponent<Renderer>().material.color = Color.black;
+            }
+            
         
     }
-
-    private void OnCollisionExit(Collision other)
+    private void OnTriggerExit(Collider other)
     {
-        if(other.gameObject.name == "Tor")
-            other.gameObject.GetComponent<Renderer>().material.color = new Color(255, 255, 255);
+        foreach (GameObject go in GameObject.FindGameObjectsWithTag("TorCollider"))
+        {
+            go.GetComponent<Renderer>().material.color = Color.white;
+        }
     }
+
+   
 }
