@@ -52,6 +52,9 @@ public class SteuerungTyp : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        
+        
+            
         foreach (GameObject go in GameObject.FindGameObjectsWithTag("TorCollider"))
             {
                 go.GetComponent<Renderer>().material.color = Color.black;
