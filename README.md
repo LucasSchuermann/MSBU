@@ -4,6 +4,7 @@
 
 In order to work on this project, the following packages must be installed manually:
   - Cinemachine
+  - ProBuilder
   - Terrain Tools
   - the Asset and Sample Package of the Terrain Tools extension
 
