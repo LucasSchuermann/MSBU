@@ -6,8 +6,11 @@ using UnityEngine.Serialization;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [FormerlySerializedAs("rigidbodyComponent")] [SerializeField] private Rigidbody PlayerBody;
+    
+    [SerializeField] private Rigidbody PlayerBody;
     [SerializeField] private Transform PlayerCamera;
+    [SerializeField] private Transform GroundCollisionCheck;
+    [SerializeField] private LayerMask GroundMask;
     [Space]
     [SerializeField] private float PlayerSpeed;
     [SerializeField] private float Sensitivity;
@@ -35,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once physics update
     private void FixedUpdate()
     {
-       
+       PlayerBody.AddForce(Physics.gravity * 2, ForceMode.Acceleration);
         
     }
 
@@ -43,14 +46,27 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector3 moveVector = transform.TransformDirection(playerMovementInput) * PlayerSpeed;
         PlayerBody.velocity = new Vector3(moveVector.x, PlayerBody.velocity.y, moveVector.z);
-
+       
+        PlayerBody.rotation = Quaternion.Euler(0f, PlayerCamera.transform.eulerAngles.y, 0f);
+         // float targetAngle = Mathf.Atan2(moveVector.x, moveVector.y) * Mathf.Rad2Deg;
+         // PlayerBody.rotation = Quaternion.Euler(0f, targetAngle, 0f);
+        
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            PlayerBody.AddForce(Vector3.up * JumpForce, ForceMode.Impulse);
+            foreach (Collider c in Physics.OverlapSphere(GroundCollisionCheck.position, 0.1f, GroundMask))
+            {
+                Debug.Log(c.name);
+            }
+           
+            
+            if (Physics.CheckSphere(GroundCollisionCheck.position, 0.5f, GroundMask))
+            {
+                PlayerBody.AddForce(Vector3.up * JumpForce, ForceMode.Impulse);
+            }
         }
     }
     private void MovePlayerCamera()
     {
-        PlayerBody.rotation = Quaternion.Euler(0f, PlayerCamera.transform.eulerAngles.y, 0f);
+        
     }
 }
