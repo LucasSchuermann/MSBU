@@ -46,7 +46,7 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector3 moveVector = transform.TransformDirection(playerMovementInput) * PlayerSpeed;
         PlayerBody.velocity = new Vector3(moveVector.x, PlayerBody.velocity.y, moveVector.z);
-       
+        Debug.Log("YOLO SWAG");
         PlayerBody.rotation = Quaternion.Euler(0f, PlayerCamera.transform.eulerAngles.y, 0f);
          // float targetAngle = Mathf.Atan2(moveVector.x, moveVector.y) * Mathf.Rad2Deg;
          // PlayerBody.rotation = Quaternion.Euler(0f, targetAngle, 0f);
